@@ -16,13 +16,48 @@ using System.Runtime.CompilerServices;
 /// </summary>
 public static partial class PolyFillExtensions
 {
+
     //conditinal compile to get best performance.. 
-    //when testing Remove conditinal formatting.
 #if NETFRAMEWORK
+
     /// <summary>
-    /// net472_polyFill - Queue.TakeLast
+    /// net472_polyFill
     /// </summary>
-    public static IEnumerable<T> TakeLast<T>(this Queue<T> queue, int count)
+    public static IEnumerable<T> TakeLast<T>(this Queue<T> queue, int count) => TakeLast_internal(queue, count);
+
+    /// <summary>
+    ///  net472_polyFill
+    /// </summary>
+    public static TValue GetValueOrDefault<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue) 
+        => dictionary.TryGetValue(key, out var value) ? value : defaultValue;
+
+    /// <summary>
+    ///  net472_polyFill 
+    /// </summary>
+    public static bool TryRemove<TK, TValue>(this ConcurrentDictionary<TK, TValue> dictionary, KeyValuePair<TK, TValue> item) 
+        => dictionary.TryRemove(item.Key, out _);
+
+#endif
+
+    /// <summary>
+    /// net472_polyFill - nint.Zero
+    /// </summary>
+    public static nint nint_Zero => (nint)0;
+
+
+}
+
+
+
+/// <summary>
+///  net472_polyFill - not for public use,  intented to be consumed in "Unit Tests".
+/// </summary>
+public static partial class PolyFillExtensions
+{
+    /// <summary>
+    /// net472_polyFill - internal
+    /// </summary>
+    internal static IEnumerable<T> TakeLast_internal<T>(Queue<T> queue, int count)
     {
         if (queue is null)
             throw new ArgumentNullException("source is null ");
@@ -45,35 +80,8 @@ public static partial class PolyFillExtensions
         return queue.Skip(startIndex).Take(take).ToList();
 
     }
-
-
-    /// <summary>
-    ///  net472_polyFill
-    /// </summary>
-    public static TValue GetValueOrDefault<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
-    {
-        return dictionary.TryGetValue(key, out var value) ? value : defaultValue;
-    }
-
-    /// <summary>
-    ///  net472_polyFill 
-    /// </summary>
-    public static bool TryRemove<TK, TValue>(this ConcurrentDictionary<TK, TValue> dictionary, KeyValuePair<TK, TValue> item)
-    {
-        return dictionary.TryRemove(item.Key, out _);
-    }
-#endif
-
-
-    /// <summary>
-    /// net472_polyFill - nint.Zero
-    /// </summary>
-    public static nint nint_Zero
-    {
-        get { return (nint)0; } // Or return default(nint); in .NET Framework 4.7.2
-    }
-
 }
 
- 
+
+
 
