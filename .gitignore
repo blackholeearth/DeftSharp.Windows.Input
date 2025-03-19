@@ -7,6 +7,3 @@ DeftSharp.Windows.Input.sln.DotSettings.user
 WPF.Playground/bin
 WPF.Playground/obj
 .vs
-/Test_polyfill/bin
-/Test_polyfill/obj
-DeftSharp.Windows.Input/DeftSharp.Windows.Input.csproj.user
